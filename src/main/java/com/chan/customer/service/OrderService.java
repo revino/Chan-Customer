@@ -1,7 +1,7 @@
 package com.chan.customer.service;
 
+import com.chan.customer.client.SellerClient;
 import com.chan.customer.domain.*;
-import com.chan.customer.repository.CustomerRepository;
 import com.chan.customer.repository.OrderReposiotry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,13 +17,13 @@ import java.util.List;
 public class OrderService {
 
     private final OrderReposiotry orderReposiotry;
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
     @Transactional
     public Long requestOrder(String accountId, List<Menu> menuList){
 
         //고객 정보 조회
-        Customer customer = customerRepository.findByAccountId(accountId);
+        Customer customer = customerService.findAccountId(accountId);
 
         //배송 정보 생성
         Delivery delivery = new Delivery();
@@ -38,7 +38,7 @@ public class OrderService {
         }
 
         //주문 생성
-        Order order = Order.requestOrder(customer, delivery, orderMenuList);
+        Order order = Order.request(customer, delivery, orderMenuList);
 
         //주문 저장
         orderReposiotry.save(order);
@@ -46,10 +46,11 @@ public class OrderService {
         return order.getId();
     }
 
+
     public List<Order> findOrder(String accountId, LocalDateTime start, LocalDateTime end){
 
         //고객 정보 조회
-        Customer customer = customerRepository.findByAccountId(accountId);
+        Customer customer = customerService.findAccountId(accountId);
 
         //주문 정보 조회
         List<Order> orderList = orderReposiotry.findByCustomerAndOrderDateTimeBetween(customer,start,end);

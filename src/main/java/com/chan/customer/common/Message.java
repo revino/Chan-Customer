@@ -1,6 +1,9 @@
-package com.chan.customer.controller;
+package com.chan.customer.common;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+import org.springframework.validation.Errors;
 
 @Data
 public class Message {
@@ -13,4 +16,5 @@ public class Message {
         this.data = null;
         this.message = null;
     }
+
 }

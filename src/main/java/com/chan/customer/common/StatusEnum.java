@@ -1,4 +1,4 @@
-package com.chan.customer.controller;
+package com.chan.customer.common;
 
 public enum StatusEnum {
     OK(200, "OK"),

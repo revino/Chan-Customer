@@ -43,4 +43,23 @@ public class Menu {
         this.orderMenu = orderMenu;
     }
 
+    public void setMenuNo(Long menuNo) {
+        this.menuNo = menuNo;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public void setMenuPlan(String menuPlan) {
+        this.menuPlan = menuPlan;
+    }
+
+    public void setMenuPrice(int menuPrice) {
+        this.menuPrice = menuPrice;
+    }
+
+    public void setMenuCount(int menuCount) {
+        this.menuCount = menuCount;
+    }
 }

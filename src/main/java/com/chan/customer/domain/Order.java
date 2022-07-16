@@ -60,7 +60,7 @@ public class Order {
         delivery.setOrder(this);
     }
 
-    public static Order requestOrder(Customer customer, Delivery delivery, List<OrderMenu> orderMenuList){
+    public static Order request(Customer customer, Delivery delivery, List<OrderMenu> orderMenuList){
         Order order = new Order();
         order.setCustomer(customer);
         order.setDelivery(delivery);
