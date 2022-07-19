@@ -21,6 +21,12 @@ public class Customer {
     @Column(name = "account_id", unique = true, length = 250)
     private String accountId;
 
+    @NotNull
+    private String name;
+
+    @NotNull
+    private String telephone;
+
     @Embedded
     private Address address;
 
@@ -35,5 +41,11 @@ public class Customer {
         this.address = address;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 }

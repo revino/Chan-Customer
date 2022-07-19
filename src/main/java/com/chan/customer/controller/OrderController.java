@@ -6,6 +6,8 @@ import com.chan.customer.domain.Menu;
 import com.chan.customer.domain.Order;
 import com.chan.customer.dto.MenuDto;
 import com.chan.customer.dto.OrderRequestDto;
+import com.chan.customer.dto.OrderResponseDto;
+import com.chan.customer.dto.OrderUpdateDto;
 import com.chan.customer.exception.OrderRequestValidationFailedException;
 import com.chan.customer.service.OrderService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,13 +25,14 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/customer/order")
 public class OrderController {
 
     private final OrderService orderService;
 
     private final ObjectMapper objectMapper;
 
-    @GetMapping("/order")
+    @GetMapping
     public ResponseEntity<Message> orders(@RequestParam String accountId,
                                           @RequestParam
                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -53,8 +56,8 @@ public class OrderController {
         return ResponseEntity.ok().body(message);
 
     }
-    @PostMapping("/order")
-    public ResponseEntity<Message> requestOrder(@RequestBody @Valid OrderRequestDto orderDto, Errors errors) throws JsonProcessingException {
+    @PostMapping
+    public ResponseEntity<Message> requestOrder(@Valid @RequestBody OrderRequestDto orderDto, Errors errors) throws JsonProcessingException {
 
         Message message = new Message();
 
@@ -67,10 +70,25 @@ public class OrderController {
                 .map(MenuDto::toEntity)
                 .collect(Collectors.toList());
 
-        orderService.requestOrder(orderDto.getAccountId(), menuList);
+        Order order = orderService.requestOrder(orderDto.getAccountId(), menuList);
 
         message.setStatus(StatusEnum.OK);
         message.setMessage("주문 성공");
+        message.setData(new OrderResponseDto(order));
+
+        return ResponseEntity.ok().body(message);
+    }
+
+    @PutMapping
+    public ResponseEntity<Message> updateOrder(@RequestBody OrderUpdateDto orderUpdateDto){
+
+        Message message = new Message();
+
+        Order order = orderService.updateOrder(orderUpdateDto.getOrderId(), orderUpdateDto.getOrderStatus());
+
+        message.setStatus(StatusEnum.OK);
+        message.setMessage("주문 상태 변경 완료");
+        message.setData(new OrderResponseDto(order));
 
         return ResponseEntity.ok().body(message);
     }

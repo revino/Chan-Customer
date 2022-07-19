@@ -7,9 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Member;
-
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -18,15 +15,16 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     @Transactional
-    public Long signUp(Customer customer){
+    public Customer signUp(Customer customer){
 
         checkCustomer(customer);
-        customerRepository.save(customer);
-        return customer.getId();
+        Customer customerResult = customerRepository.save(customer);
+
+        return customerResult;
     }
 
     @Transactional
-    public Long update(Customer newInfo){
+    public Customer update(Customer newInfo){
 
         Customer customer = customerRepository.findByAccountId(newInfo.getAccountId());
 
@@ -35,10 +33,12 @@ public class CustomerService {
         }
 
         customer.setAddress(newInfo.getAddress());
+        customer.setTelephone(newInfo.getTelephone());
+        customer.setName(newInfo.getName());
 
         customerRepository.save(customer);
 
-        return customer.getId();
+        return customer;
     }
 
     public Customer findAccountId(String AccountId){

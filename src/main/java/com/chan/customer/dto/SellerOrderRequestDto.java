@@ -1,24 +1,30 @@
 package com.chan.customer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.chan.customer.domain.Address;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
+@Builder
 public class SellerOrderRequestDto {
 
     @NotEmpty
-    private String accountId;
+    private String customerId;
 
-    private Long menuNo;
+    @NotEmpty
+    private String customerName;
+
+    @NotEmpty
+    private Address customerAddress;
+
+    @NotEmpty
+    private String customerTelephone;
+
+    @NotEmpty
+    private Long menuId;
 
     @NotEmpty
     private String menuName;

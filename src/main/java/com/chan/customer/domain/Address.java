@@ -13,9 +13,9 @@ import javax.persistence.Embeddable;
 @Getter
 public class Address {
 
-    //지번 주소
+    //도로명 주소
     @NotNull
-    private String jibunAddress;
+    private String doroAddress;
 
     //한국 행정 구역 코드
     @NotNull
